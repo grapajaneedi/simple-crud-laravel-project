@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use League\Csv\Writer;
+use Illuminate\Support\Facades\Response;
 use App\Models\Book;
 
 class BookController extends Controller
@@ -152,5 +154,31 @@ public function destroy($books_id)
     return view('welcome', compact('books'));
 }
      
+
+public function exportBooksToCsv()
+    {
+        // Fetch the data from the "books" table
+        $books = Book::all();
+
+        // Create a new CSV Writer instance
+        $csv = Writer::createFromFileObject(new \SplTempFileObject());
+
+        // Insert the header row
+        $csv->insertOne(['Title', 'Author']);
+
+        // Insert the data rows
+        foreach ($books as $book) {
+            $csv->insertOne([$book->title, $book->author]);
+        }
+
+        // Set the response headers for file download
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="books.csv"',
+        ];
+
+        // Return the CSV file as a download response
+        return Response::make($csv->__toString(), 200, $headers);
+    }
   
 }
