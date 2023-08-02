@@ -126,8 +126,8 @@ class BookController extends Controller
          }
      
          $book->update($validatedData);
-         dd('Updated successfully');
-
+        // dd('Updated successfully');
+        $books = Book::all();
          // Redirect to the updated book details or any other page you prefer
          return view('welcome', compact('books'));
      }

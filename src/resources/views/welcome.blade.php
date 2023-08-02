@@ -232,7 +232,7 @@
                             <div class="card card-body">
                                 <form action="{{ route('books.update', $book->books_id) }}" method="POST">
                                     @csrf
-                                   
+                                    @method('PUT')
                                     <input type="text"  name="author"  class="form-control" value="{{ $book->author }}">
                                     <br>
                                     <button class="btn btn-secondary" type="submit">Update</button>
