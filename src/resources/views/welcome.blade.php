@@ -131,10 +131,39 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
+        th[data-column] {
+        cursor: pointer;
+    }
+
+    th.sorted-asc::after {
+        content: '\25B2'; /* Up arrow symbol */
+        margin-left: 5px;
+    }
+
+    th.sorted-desc::after {
+        content: '\25BC'; /* Down arrow symbol */
+        margin-left: 5px;
+    }
 </style>
 
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<head>
+    <!-- Other meta tags and CSS stylesheets -->
+    <!-- ... -->
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
 
     <div class="container">
         <h1>Yaraku Web Developer Assignment</h1>
@@ -185,13 +214,12 @@
             </form>
             
         <br>
-        <input type="text" id="searchTerm" class="form-control" placeholder="Search by Title or Author">
-      
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by Title or Author">
         <table class="table table-striped mt-3" id="booksTable">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
+                    <th data-column="title">Title</th>
+                    <th data-column="author">Author</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -199,23 +227,36 @@
                 @foreach ($books as $book)
                 <tr>
                     <td>{{ $book->title }}</td>
-                    <td>{{ $book->author }}</td>
+                    <td>{{ $book->author }}
+                         <div class="collapse mt-2" id="collapse-{{ $loop->index }}">
+                            <div class="card card-body">
+                                <form action="{{ route('books.update', $book->books_id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="text"  class="form-control" value="{{ $book->author }}">
+                                    <br>
+                                    <button class="btn btn-secondary" type="submit">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
                     <td>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $loop->index }}" aria-expanded="false">
+                            Edit
+                        </button>
+                       
                         <form action="{{ route('books.destroy', $book->books_id) }}" method="POST" style="display: inline">
                             @csrf
                             @method('POST')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
+
                     </td>
                 </tr>
                 @endforeach
             </tbody>
-        
-            
-            
-            
-            
         </table>
+
     </div>
 {{-- @endsection --}}
 
@@ -224,43 +265,71 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 @endsection
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('#searchInput').on('input', function() {
+        var searchTerm = $(this).val();
+
+        $.ajax({
+            url: "{{ route('books.search') }}",
+            method: "GET",
+            data: { searchTerm: searchTerm },
+            success: function(data) {
+                // Replace the table body with the search results
+                $('#booksTable tbody').html(data);
+            }
+        });
+    });
+});
+</script>
+
+    
 <script>
     $(document).ready(function() {
-        // Function to update book list based on search input
-        function updateBookList() {
-            var searchTerm = $('#searchTerm').val();
+        // Add a click event handler to table headers
+        $('th[data-column]').on('click', function() {
+            var column = $(this).data('column');
+            sortTableByColumn(column);
     
-            // Send AJAX request to the server for live search
-            $.ajax({
-                url: "{{ route('books.search') }}", // The route to the search method in BookController
-                type: "GET",
-                data: { searchTerm: searchTerm },
-                dataType: "json",
-                success: function(response) {
-                    // Update the book list in the table with the new search results
-                    var tableBody = '';
-                    $.each(response, function(index, book) {
-                        tableBody += '<tr>';
-                        tableBody += '<td>' + book.title + '</td>';
-                        tableBody += '<td>' + book.author + '</td>';
-                        
-                        tableBody += '</tr>';
-                    });
-                    $('#booksTable tbody').html(tableBody);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        }
-    
-        // Bind the keyup event to the search input field
-        $('#searchTerm').on('keyup', function() {
-            updateBookList();
+            // Toggle sorting class on the clicked header
+            $('th[data-column]').not(this).removeClass('sorted-asc sorted-desc');
+            $(this).toggleClass('sorted-asc sorted-desc');
         });
     
-        // Initialize the book list on page load
-        updateBookList();
+        // Function to sort table data
+        function sortTableByColumn(column) {
+            var $tbody = $('#booksTable tbody');
+            var rows = $tbody.find('tr').get();
+    
+            rows.sort(function(a, b) {
+                var aValue = $(a).find('td[data-column="' + column + '"]').text().toUpperCase();
+                var bValue = $(b).find('td[data-column="' + column + '"]').text().toUpperCase();
+    
+                if ($(a).hasClass('sorted-desc')) {
+                    return aValue < bValue ? 1 : -1;
+                } else {
+                    return aValue > bValue ? 1 : -1;
+                }
+            });
+    
+            // Detach and reattach the sorted rows to preserve event handlers and elements
+            $tbody.empty();
+            for (var i = 0; i < rows.length; i++) {
+                $tbody.append(rows[i]);
+            }
+        }
     });
     </script>
+    
+    
+    
+
+    
+
+
 

@@ -12,10 +12,22 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::all();
-        return view('welcome', compact('books'));
+       
+        $searchTerm = $request->input('searchTerm');
+        $books = Book::when($searchTerm, function ($query, $searchTerm) {
+        return $query->where('title', 'like', '%' . $searchTerm . '%')
+                     ->orWhere('author', 'like', '%' . $searchTerm . '%');
+    })->get();
+
+    if ($request->ajax()) {
+        return view('books.search_results', compact('books'));
+    }
+
+    $books = Book::all();
+    return view('welcome', compact('books'));
+
     }
 
     /**
@@ -25,14 +37,14 @@ class BookController extends Controller
      */
 
      public function search(Request $request)
-     {
-         $searchTerm = $request->input('searchTerm');
-         $books = Book::where('title', 'like', '%' . $searchTerm . '%')
-             ->orWhere('author', 'like', '%' . $searchTerm . '%')
-             ->get();
-     
-         return response()->json($books);
-     }
+{
+    $searchTerm = $request->input('searchTerm');
+    $books = Book::where('title', 'like', '%' . $searchTerm . '%')
+                 ->orWhere('author', 'like', '%' . $searchTerm . '%')
+                 ->get();
+
+    return view('books.search_results', compact('books'));
+}
     
     public function create()
     {
@@ -77,11 +89,18 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        // $book->delete();
-        // return redirect()->route('books.index')->with('success', 'Book deleted successfully!');
+    public function edit($books_id)
+{
+    $book = Book::find($books_id);
+
+    if (!$book) {
+        return redirect()->route('books.index')->with('error', 'Book not found.');
     }
+
+    return view('welcome', compact('books'));
+}
+
+
 
     /**
      * Update the specified resource in storage.
@@ -92,10 +111,24 @@ class BookController extends Controller
      */
 
      
-    public function update(Request $request, $id)
-    {
+     public function update(Request $request, $books_id)
+     {
+        $book = Book::find($books_id);
+         $validatedData = $request->validate([
+             'author' => 'required|max:100',
+         ]);
+     
         
-    }
+         if (!$book) {
+            return redirect()->route('books.index')->with('error', 'Book not found.');
+         }
+     
+         $book->update($validatedData);
+         dd('Updated successfully');
+
+         // Redirect to the updated book details or any other page you prefer
+         return view('welcome', compact('books'));
+     }
 
     /**
      * Remove the specified resource from storage.
