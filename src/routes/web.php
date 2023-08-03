@@ -16,6 +16,4 @@ Route::get('/export-booksxml', [BookController::class, 'exportBooksToXml'])->nam
 Route::get('/export-booksxmltitle', [BookController::class, 'exportBooksToXmlTitle'])->name('export.books.xml.title');
 Route::get('/export-booksxmlauthor', [BookController::class, 'exportBooksToXmlAuthor'])->name('export.books.xml.author');
 
-
-
 ?>

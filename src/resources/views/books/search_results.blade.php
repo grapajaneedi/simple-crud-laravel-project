@@ -1,8 +1,5 @@
-<style>
 
-    
 
-</style>
 <tbody>
     @foreach ($books as $book)
     <tr>
@@ -35,3 +32,37 @@
     </tr>
     @endforeach
 </tbody>
+
+<style>
+    .container {
+    margin-top: 20px;
+    
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+</style>

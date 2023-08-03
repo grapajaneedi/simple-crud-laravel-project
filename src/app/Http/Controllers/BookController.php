@@ -7,7 +7,6 @@ use League\Csv\Writer;
 use Illuminate\Support\Facades\Response;
 use App\Models\Book;
 
-
 class BookController extends Controller
 {
     /**

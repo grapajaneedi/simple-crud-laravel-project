@@ -1,198 +1,14 @@
-<!-- resources/views/welcome.blade.php -->
-
-{{-- @extends('layouts.app')
-
-@section('content')  --}}
-
-<style>
-    .container {
-    margin-top: 20px;
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .table th,
-  .table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  .table tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .btn {
-    text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    cursor: pointer;
-  }
-  
- 
-  
-  .btn-info {
-    background-color: #17a2b8;
-  }
-  
-  .btn-sm {
-    font-size: 14px;
-  }
-  
-  .btn-primary:hover,
-  .btn-info:hover {
-    background-color: #0056b3;
-  }
-  
-        .add-book-form {
-            width: 100%;
-            margin: 0 auto;
-            /* margin-left: 20px;
-            margin-right: 20px; */
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .form-control {
-            width: 40%;
-            padding: 8px 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            
-        }
-
-        .btn-success {
-            text-align: center;
-            display: block;
-            
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            
-        }
-
-        .btn-primary {
-            text-align: center;
-            display: block;
-            
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        th[data-column] {
-        cursor: pointer;
-    }
-
-    th.sorted-asc::after {
-        content: '\25B2'; /* Up arrow symbol */
-        margin-left: 5px;
-    }
-
-    th.sorted-desc::after {
-        content: '\25BC'; /* Down arrow symbol */
-        margin-left: 5px;
-    }
-
-    .menu-container {
-  position: relative;
-  display: inline-block;
-  margin-right: 20px; /* Add some spacing between menu containers */
-}
-
-.menu-button {
-    max-width: 100%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.sub-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #f9f9f9;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.sub-menu li {
-  padding: 12px 16px;
-  list-style: none;
-}
-
-.sub-menu li a {
-  color: black;
-  text-decoration: none;
-  display: block;
-}
-
-.sub-menu li a:hover {
-  background-color: #f1f1f1;
-}
-
-</style>
-
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <!-- Other meta tags and CSS stylesheets -->
-    <!-- ... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <link rel="icon" href="{{ asset('icon.png') }}" type="image/x-icon">
+    
+    <!-- Add your CSS or external stylesheets here -->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -205,20 +21,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-
-
     <div class="container">
         <h1>Yaraku Web Developer Assignment</h1>
-
 
         <div class="container">
             <div class="row">
             <div class="col-sm-8">
-               
-                  
             </div>
-            <div class="col-sm-4">
-
+            <div class="col-sm-4" style="text-align: right;">
                 <div class="menu-container">
                     <button class="menu-button">Export CSV</button>
                     <ul class="sub-menu">
@@ -227,7 +37,6 @@
                       <li><a href="{{ route('export.books.csv.author') }}">Authors</a></li>
                     </ul>
                   </div>
-                  
                   <div class="menu-container">
                     <button class="menu-button">Export XML</button>
                     <ul class="sub-menu">
@@ -236,9 +45,7 @@
                       <li><a href="{{ route('export.books.xml.author') }}">Authors</a></li>
                     </ul>
                   </div>
-        
             </div>
-            
         </div>
         </div>
 
@@ -256,21 +63,16 @@
                     <label for="author">Author</label>
                     <input type="text" name="author" id="author" class="form-control" required>
                 </div>
-               
-
                 <div class="row">
                     <div class="col-sm-4">
-                        
                     </div>
                     <div class="col-sm-4">
-                       
                     </div>
                     <div class="col-sm-4">
                         <button type="submit" class="btn btn-success">Add Book</button>
                     </div>
                 </div>
             </form>
-            
         <br>
         <input type="text" id="searchInput" class="form-control" placeholder="Search by Title or Author">
         <table class="table table-striped mt-3" id="booksTable">
