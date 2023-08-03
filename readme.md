@@ -29,6 +29,31 @@ It is built using **PHP version 7.2.5** and **Laravel version 6.18**
 3.  Install the composer packages by running  `docker-compose exec laravel composer install`.
 4.  Access the Laravel instance on  `http://localhost`  (If there is a "Permission denied" error, run  `docker-compose exec laravel chown -R www-data storage`).
 
+## Persistent database
+
+If you want to make sure that the data in the database persists even if the database container is deleted, add a file named  `docker-compose.override.yml`  in the project root with the following contents.
+
+```
+version: "3.7"
+
+services:
+  mysql:
+    volumes:
+    - mysql:/var/lib/mysql
+
+volumes:
+  mysql:
+
+```
+
+Then run the following.
+
+```
+docker-compose stop \
+  && docker-compose rm -f mysql \
+  && docker-compose up -d
+```
+
 ## Usage
 
 1.  Access the application in your web browser `http://localhost`.
