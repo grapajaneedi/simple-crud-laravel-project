@@ -182,6 +182,58 @@ public function exportBooksToCsv()
         return Response::make($csv->__toString(), 200, $headers);
     }
 
+    public function exportBooksToCsvTitle()
+    {
+        // Fetch the data from the "books" table
+        $books = Book::all();
+
+        // Create a new CSV Writer instance
+        $csv = Writer::createFromFileObject(new \SplTempFileObject());
+
+        // Insert the header row
+        $csv->insertOne(['Title']);
+
+        // Insert the data rows
+        foreach ($books as $book) {
+            $csv->insertOne([$book->title]);
+        }
+
+        // Set the response headers for file download
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="books_title_export.csv"',
+        ];
+
+        // Return the CSV file as a download response
+        return Response::make($csv->__toString(), 200, $headers);
+    }
+
+    public function exportBooksToCsvAuthor()
+    {
+        // Fetch the data from the "books" table
+        $books = Book::all();
+
+        // Create a new CSV Writer instance
+        $csv = Writer::createFromFileObject(new \SplTempFileObject());
+
+        // Insert the header row
+        $csv->insertOne(['Author']);
+
+        // Insert the data rows
+        foreach ($books as $book) {
+            $csv->insertOne([$book->author]);
+        }
+
+        // Set the response headers for file download
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="books_author_export.csv"',
+        ];
+
+        // Return the CSV file as a download response
+        return Response::make($csv->__toString(), 200, $headers);
+    }
+
   
     public function exportBooksToXml()
     {
