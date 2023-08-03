@@ -223,8 +223,8 @@
                     <button class="menu-button">Export CSV</button>
                     <ul class="sub-menu">
                       <li><a href="{{ route('export.books.csv') }}" >Title and Author</a></li>
-                      <li><a href="#">Titles</a></li>
-                      <li><a href="#">Authors</a></li>
+                      <li><a href="{{ route('export.books.csv.title') }}">Titles</a></li>
+                      <li><a href="{{ route('export.books.csv.author') }}">Authors</a></li>
                     </ul>
                   </div>
                   
@@ -232,8 +232,8 @@
                     <button class="menu-button">Export XML</button>
                     <ul class="sub-menu">
                       <li><a href="{{ route('export.books.xml') }}">Title and Author</a></li>
-                      <li><a href="#">Titles</a></li>
-                      <li><a href="#">Authors</a></li>
+                      <li><a href="{{ route('export.books.xml.title') }}">Titles</a></li>
+                      <li><a href="{{ route('export.books.xml.author') }}">Authors</a></li>
                     </ul>
                   </div>
         

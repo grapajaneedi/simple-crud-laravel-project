@@ -194,7 +194,7 @@ public function exportBooksToCsv()
         // Set the response headers for file download
         $headers = [
             'Content-Type' => 'application/xml',
-            'Content-Disposition' => 'attachment; filename="books.xml"',
+            'Content-Disposition' => 'attachment; filename="books_title_author_export.xml"',
         ];
 
         // Return the XML file as a download response
@@ -218,5 +218,72 @@ public function exportBooksToCsv()
         return $xml;
     }
 
+    public function exportBooksToXmlTitle()
+    {
+        // Fetch the data from the "books" table
+        $books = Book::all();
+
+        // Create the XML content
+        $xmlContent = $this->generateXMLTitle($books);
+
+        // Set the response headers for file download
+        $headers = [
+            'Content-Type' => 'application/xml',
+            'Content-Disposition' => 'attachment; filename="books_title_export.xml"',
+        ];
+
+        // Return the XML file as a download response
+        return Response::make($xmlContent, 200, $headers);
+    }
+
+    private function generateXMLTitle($books)
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+        $xml .= '<books>' . PHP_EOL;
+
+        foreach ($books as $book) {
+            $xml .= '<book>' . PHP_EOL;
+            $xml .= '    <title>' . $book->title . '</title>' . PHP_EOL;
+            $xml .= '</book>' . PHP_EOL;
+        }
+
+        $xml .= '</books>' . PHP_EOL;
+
+        return $xml;
+    }
+
+    public function exportBooksToXmlAuthor()
+    {
+        // Fetch the data from the "books" table
+        $books = Book::all();
+
+        // Create the XML content
+        $xmlContent = $this->generateXMLAuthor($books);
+
+        // Set the response headers for file download
+        $headers = [
+            'Content-Type' => 'application/xml',
+            'Content-Disposition' => 'attachment; filename="books_author_export.xml"',
+        ];
+
+        // Return the XML file as a download response
+        return Response::make($xmlContent, 200, $headers);
+    }
+
+    private function generateXMLAuthor($books)
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+        $xml .= '<books>' . PHP_EOL;
+
+        foreach ($books as $book) {
+            $xml .= '<book>' . PHP_EOL;
+            $xml .= '    <author>' . $book->author . '</author>' . PHP_EOL;
+            $xml .= '</book>' . PHP_EOL;
+        }
+
+        $xml .= '</books>' . PHP_EOL;
+
+        return $xml;
+    }
   
 }
