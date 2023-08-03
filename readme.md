@@ -1,7 +1,10 @@
-# Yaraku Web Developer Assignment - Book List Application
 
+# Yaraku Web Developer Assignment - Book List Application
 This web application is a **Book List** that allows users to manage a collection of books.  
-It is built using **PHP version 7.2.5** and **Laravel version 6.18**
+<div style="display: flex;"> 
+
+ [Features](#features) - [Requirements](#requirements) - [Installation](#installation) - [Persistent database](#persistent-database) - [Usage](#usage) - [Folder Structure](#folder-structure) - [Contributors](#contributors) - [Acknowledgments](#acknowledgments)
+
 ## Features
 
 -   Add a book to the list
@@ -16,7 +19,7 @@ It is built using **PHP version 7.2.5** and **Laravel version 6.18**
 
 ## Requirements
 
--   **PHP version 7.2.5** or higher
+-   **PHP version 7.2.5** 
 -   **Laravel version 6.18**
 -   **Composer** for package management
 -   [Docker](https://docs.docker.com/install)
@@ -57,12 +60,12 @@ docker-compose stop \
 ## Usage
 
 1.  Access the application in your web browser `http://localhost`.
-2.  Navigate to the "Add Book" page to add new books to the list.
+2.  Click on the "Add Book" button to add new books to the list.
 3.  Use the "Delete" button to remove a book from the list.
 4.  Click on the "Edit" button to change an author's name.
 5.  Click on the table headers "Title" or "Author" to sort the list.
 6.  Use the search bar to search for books by title or author.
-7.  To export the list, click on the "Export" button and choose the desired format (CSV or XML).
+7.  To export the list, click on the "Export CSV" or "Export XML" button and choose either Title and Author, Title only or Author only.
 
 ## Folder Structure
 
@@ -72,11 +75,10 @@ docker-compose stop \
 -   **database**: Contains migration files for database setup.
 
 
-
 ## Contributors
 
 -   [Janeedi Grapa ](https://github.com/grapajaneedi)
 
 ## Acknowledgments
 
-Thank you for considering me to be your new Web Developer. I hope this project meets your expectations and demonstrates my proficiency in PHP and Laravel development. Feel free to reach out if you have any questions or feedback. 
+Thank you for considering me to be your new Web Developer. I hope this project meets your expectations and demonstrates my skills in PHP and Laravel development. I will continue to learn more and do my best. Feel free to reach out if you have any questions or feedback. 
