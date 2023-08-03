@@ -7,6 +7,7 @@ use League\Csv\Writer;
 use Illuminate\Support\Facades\Response;
 use App\Models\Book;
 
+
 class BookController extends Controller
 {
     /**
@@ -180,5 +181,42 @@ public function exportBooksToCsv()
         // Return the CSV file as a download response
         return Response::make($csv->__toString(), 200, $headers);
     }
+
+  
+    public function exportBooksToXml()
+    {
+        // Fetch the data from the "books" table
+        $books = Book::all();
+
+        // Create the XML content
+        $xmlContent = $this->generateXML($books);
+
+        // Set the response headers for file download
+        $headers = [
+            'Content-Type' => 'application/xml',
+            'Content-Disposition' => 'attachment; filename="books.xml"',
+        ];
+
+        // Return the XML file as a download response
+        return Response::make($xmlContent, 200, $headers);
+    }
+
+    private function generateXML($books)
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+        $xml .= '<books>' . PHP_EOL;
+
+        foreach ($books as $book) {
+            $xml .= '<book>' . PHP_EOL;
+            $xml .= '    <title>' . $book->title . '</title>' . PHP_EOL;
+            $xml .= '    <author>' . $book->author . '</author>' . PHP_EOL;
+            $xml .= '</book>' . PHP_EOL;
+        }
+
+        $xml .= '</books>' . PHP_EOL;
+
+        return $xml;
+    }
+
   
 }

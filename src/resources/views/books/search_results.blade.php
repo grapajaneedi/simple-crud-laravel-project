@@ -1,5 +1,8 @@
+<style>
 
+    
 
+</style>
 <tbody>
     @foreach ($books as $book)
     <tr>
@@ -21,11 +24,13 @@
             <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $loop->index }}" aria-expanded="false">
                 Edit
             </button>
+           
             <form action="{{ route('books.destroy', $book->books_id) }}" method="POST" style="display: inline">
                 @csrf
                 @method('POST')
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
+
         </td>
     </tr>
     @endforeach

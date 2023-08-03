@@ -145,6 +145,48 @@
         content: '\25BC'; /* Down arrow symbol */
         margin-left: 5px;
     }
+
+    .menu-container {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px; /* Add some spacing between menu containers */
+}
+
+.menu-button {
+    max-width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.sub-menu li {
+  padding: 12px 16px;
+  list-style: none;
+}
+
+.sub-menu li a {
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.sub-menu li a:hover {
+  background-color: #f1f1f1;
+}
+
 </style>
 
 
@@ -172,13 +214,29 @@
         <div class="container">
             <div class="row">
             <div class="col-sm-8">
-                
+               
+                  
             </div>
-            <div class="col-sm-2">
-                <a href="{{ route('export.books.csv') }}" class="btn btn-primary">Export CSV</a>
-            </div>
-            <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary">Export XML</button>
+            <div class="col-sm-4">
+
+                <div class="menu-container">
+                    <button class="menu-button">Export CSV</button>
+                    <ul class="sub-menu">
+                      <li><a href="{{ route('export.books.csv') }}" >Title and Author</a></li>
+                      <li><a href="#">Titles</a></li>
+                      <li><a href="#">Authors</a></li>
+                    </ul>
+                  </div>
+                  
+                  <div class="menu-container">
+                    <button class="menu-button">Export XML</button>
+                    <ul class="sub-menu">
+                      <li><a href="{{ route('export.books.xml') }}">Title and Author</a></li>
+                      <li><a href="#">Titles</a></li>
+                      <li><a href="#">Authors</a></li>
+                    </ul>
+                  </div>
+        
             </div>
             
         </div>
@@ -269,7 +327,19 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+$(document).ready(function() {
+  $(".menu-button").click(function() {
+    // Close all other open submenus
+    $(".sub-menu").not($(this).next(".sub-menu")).hide();
+    
+    // Toggle the display of the clicked menu's submenu
+    $(this).next(".sub-menu").toggle();
+  });
+});
+</script>
 <script>
 $(document).ready(function() {
     $('#searchInput').on('input', function() {

@@ -10,5 +10,8 @@ Route::get('/books/search', [BookController::class, 'search'])->name('books.sear
 Route::post('/books/{books_id}/edit', [BookController::class, 'edit'])->name('books.edit');
 Route::put('/books/{books_id}', [BookController::class, 'update'])->name('books.update');
 Route::get('/export-books', [BookController::class, 'exportBooksToCsv'])->name('export.books.csv');
-Route::get('/export-books-xml', [BookController::class, 'exportBooksToXml'])->name('export.books.xml');
+Route::get('/export-books', [BookController::class, 'exportBooksToXml'])->name('export.books.xml');
+
+
+
 ?>
