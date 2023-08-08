@@ -1,5 +1,5 @@
 
-# Yaraku Web Developer Assignment - Book List Application
+# Laravel - Book List Application
 This web application is a **Book List** that allows users to manage a collection of books.  
 <div style="display: flex;"> 
 
