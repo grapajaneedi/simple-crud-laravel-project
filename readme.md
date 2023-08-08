@@ -78,7 +78,3 @@ docker-compose stop \
 ## Contributors
 
 -   [Janeedi Grapa ](https://github.com/grapajaneedi)
-
-## Acknowledgments
-
-Thank you for considering me to be your new Web Developer. I hope this project meets your expectations and demonstrates my skills in PHP and Laravel development. I will continue to learn more and do my best. Feel free to reach out if you have any questions or feedback. 
